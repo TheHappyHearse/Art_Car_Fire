@@ -1,7 +1,12 @@
 /*
 Art Car Flame Effect
-Version 1
-2014
+2015
+Shold I be using ints where I put bytes instead?
+
+Can I use arrays instead of so much repetition in
+  the "determineSequence" function?
+
+Compiler errors are at the end
 */
 
 //The following go to the pins that control firing the effect
@@ -18,20 +23,20 @@ const byte ActivateLED=7;      //LED for Activate button (Red)
 the solenoids and shoot fire.
 */
 const byte LeftSol=8;    //Left solenoid
-const byte RightSol=9    //Right solenoid
+const byte RightSol=9;   //Right solenoid
 
 /*
 Next are the input pins for the ternery number switches. These will control
 what sequence the Arduino will play when the activate button is pressed.
 */
-const byte 18Sw=10;    //12's
-const byte 09Sw=11;
-const byte 06Sw=12;
-const byte 03Sw=13;
-const byte 02Sw=A0;
-const byte 01Sw=A1;
-const unsigned long dumbAssTimeOut=300000;
-void setup()
+const byte onesZero=10;    //12's
+const byte onesTwo=11;
+const byte threesZero=12;
+const byte threesSix=13;
+const byte ninesZero=A0;
+const byte ninesEighteen=A1;
+const unsigned long dumbAssTimeOut=300000;  //How long to wait if it's put into
+void setup()                                //"Safe Mode."
 {
   pinMode(LeftFireSw,INPUT);
   pinMode(RightFireSw,INPUT);
@@ -44,20 +49,20 @@ void setup()
   pinMode(LeftSol,OUTPUT);
   pinMode(RightSol,OUTPUT);
   
-  pinMode(18Sw,INPUT);
-  pinMode(09Sw,INPUT);
-  pinMode(06Sw,INPUT);
-  pinMode(03Sw,INPUT);
-  pinMode(02Sw,INPUT);
-  pinMode(01Sw,INPUT);
+  pinMode(onesZero,INPUT);
+  pinMode(onesTwo,INPUT);
+  pinMode(threesZero,INPUT);
+  pinMode(threesSix,INPUT);
+  pinMode(ninesZero,INPUT);
+  pinMode(ninesEighteen,INPUT);
   
 }
 
 void loop()
 {
-  turnOnLEDs()    //Turns on all LED control lights, indicating it's ready
+  turnOnLEDs();    //Turns on all LED control lights, indicating it's ready
   
-  byte selectedSequence=determineSequence;
+  byte selectedSequence = determineSequence();
   
   
   digitalRead(LeftFireSw);  //These 3 lines check the switches so the
@@ -77,7 +82,8 @@ calling for a fire sequence.
 */
 void activateIsPressed()
 {
-
+  //To be filled in later
+}
 void dumbAss()
 {
   digitalWrite(LeftSol,LOW);
@@ -106,52 +112,54 @@ void turnOffLEDs() //Shuts off all LEDs
   digitalWrite(ActivateLED,LOW);
 }
 
-byte determineSequence();  //syntax if fuxx0red! get a review! Can I use array??
+byte determineSequence();  //Can I use array??
 {
-  byte 01SwStatus = digitalRead(01Sw);
-  byte 02SwStatus = digitalRead(02Sw);
-  byte 03SwStatus = digitalRead(03Sw);
-  byte 06SwStatus = digitalRead(06Sw);
-  byte 09SwStatus = digitalRead(09Sw);
-  byte 18SwStatus = digitalRead(18Sw);
-  
-  
-  if (01SwStatus == 0 &&
-      02SwStatus == 0 &&
-      03SwStatus == 0 &&
-      06SwStatus == 0 &&
-      09SwStatus == 0 &&
-      18SwStatus == 0)
+  if (digitalRead(onesZero) == HIGH &&
+      digitalRead(onesTwo) == LOW &&
+      digitalRead(threesZero) == HIGH &&
+      digitalRead(threesSix) == LOW &&
+      digitalRead(ninesZero) == HIGH &&
+      digitalRead(ninesEighteen) == LOW)
         {return 0};      //sequence 0 is active
 
-  if (01SwStatus == 1 &&
-      02SwStatus == 0 &&
-      03SwStatus == 0 &&
-      06SwStatus == 0 &&
-      09SwStatus == 0 &&
-      18SwStatus == 0)
+  if (digitalRead(onesZero) == LOW &&
+      digitalRead(onesTwo) == LOW &&
+      digitalRead(threesZero) == HIGH &&
+      digitalRead(threesSix) == LOW &&
+      digitalRead(ninesZero) == HIGH &&
+      digitalRead(ninesEighteen) == LOW)
         {return 1};      //sequence 1 is active
         
-  if (01SwStatus == 0 &&
-      02SwStatus == 1 &&
-      03SwStatus == 0 &&
-      06SwStatus == 0 &&
-      09SwStatus == 0 &&
-      18SwStatus == 0)
+  if (digitalRead(onesZero) == LOW &&
+      digitalRead(onesTwo) == HIGH &&
+      digitalRead(threesZero) == HIGH &&
+      digitalRead(threesSix) == LOW &&
+      digitalRead(ninesZero) == HIGH &&
+      digitalRead(ninesEighteen) == LOW)
         {return 2};      //sequence 2 is active
         
-  if (01SwStatus == 0 &&
-      02SwStatus == 0 &&
-      03SwStatus == 1 &&
-      06SwStatus == 0 &&
-      09SwStatus == 0 &&
-      18SwStatus == 0)
-        {return 3};    //sequence 3 is active
+  if (digitalRead(onesZero) == HIGH &&
+      digitalRead(onesTwo) == LOW &&
+      digitalRead(threesZero) == LOW &&
+      digitalRead(threesSix) == LOW &&
+      digitalRead(ninesZero) == HIGH &&
+      digitalRead(ninesEighteen) == LOW)
+        {return 3};      //sequence 3 is active
         
-  if (01SwStatus == 1 &&
-      02SwStatus == 0 &&
-      03SwStatus == 1 &&
-      06SwStatus == 0 &&
-      09SwStatus == 0 &&
-      18SwStatus == 0)
+  if (digitalRead(onesZero) == LOW &&
+      digitalRead(onesTwo) == LOW &&
+      digitalRead(threesZero) == LOW &&
+      digitalRead(threesSix) == LOW &&
+      digitalRead(ninesZero) == HIGH &&
+      digitalRead(ninesEighteen) == LOW)
         {return 4};    // sequence 4 is active
+ //AND SO ON...       
+}
+
+/* COMPILE ERRORS WHY????
+
+Art_Car_Fire.ino: In function ‘void loop()’:
+Art_Car_Fire.ino:65:45: error: ‘determineSequence’ was not declared in this scope
+Art_Car_Fire.ino: At global scope:
+Art_Car_Fire.ino:116:1: error: expected unqualified-id before ‘{’ token
+*/
