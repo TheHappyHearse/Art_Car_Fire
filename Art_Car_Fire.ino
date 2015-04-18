@@ -1,12 +1,12 @@
 /*
 Art Car Flame Effect
 2015
+
+~-~-~-~-~-~-~-~-QUESTIONS: ~-~-~_~-~-~-~-~-~-~-~-~-
 Shold I be using ints where I put bytes instead?
 
 Can I use arrays instead of so much repetition in
   the "determineSequence" function?
-
-Compiler errors are at the end
 */
 
 //The following go to the pins that control firing the effect
@@ -112,7 +112,7 @@ void turnOffLEDs() //Shuts off all LEDs
   digitalWrite(ActivateLED,LOW);
 }
 
-byte determineSequence();  //Can I use array??
+byte determineSequence()  //Can I use array??
 {
   if (digitalRead(onesZero) == HIGH &&
       digitalRead(onesTwo) == LOW &&
@@ -120,7 +120,7 @@ byte determineSequence();  //Can I use array??
       digitalRead(threesSix) == LOW &&
       digitalRead(ninesZero) == HIGH &&
       digitalRead(ninesEighteen) == LOW)
-        {return 0};      //sequence 0 is active
+        return 0;      //sequence 0 is active
 
   if (digitalRead(onesZero) == LOW &&
       digitalRead(onesTwo) == LOW &&
@@ -128,7 +128,7 @@ byte determineSequence();  //Can I use array??
       digitalRead(threesSix) == LOW &&
       digitalRead(ninesZero) == HIGH &&
       digitalRead(ninesEighteen) == LOW)
-        {return 1};      //sequence 1 is active
+        return 1;      //sequence 1 is active
         
   if (digitalRead(onesZero) == LOW &&
       digitalRead(onesTwo) == HIGH &&
@@ -136,7 +136,7 @@ byte determineSequence();  //Can I use array??
       digitalRead(threesSix) == LOW &&
       digitalRead(ninesZero) == HIGH &&
       digitalRead(ninesEighteen) == LOW)
-        {return 2};      //sequence 2 is active
+        return 2;      //sequence 2 is active
         
   if (digitalRead(onesZero) == HIGH &&
       digitalRead(onesTwo) == LOW &&
@@ -144,7 +144,7 @@ byte determineSequence();  //Can I use array??
       digitalRead(threesSix) == LOW &&
       digitalRead(ninesZero) == HIGH &&
       digitalRead(ninesEighteen) == LOW)
-        {return 3};      //sequence 3 is active
+        return 3;      //sequence 3 is active
         
   if (digitalRead(onesZero) == LOW &&
       digitalRead(onesTwo) == LOW &&
@@ -152,14 +152,7 @@ byte determineSequence();  //Can I use array??
       digitalRead(threesSix) == LOW &&
       digitalRead(ninesZero) == HIGH &&
       digitalRead(ninesEighteen) == LOW)
-        {return 4};    // sequence 4 is active
+        return 4;    // sequence 4 is active
  //AND SO ON...       
 }
 
-/* COMPILE ERRORS WHY????
-
-Art_Car_Fire.ino: In function ‘void loop()’:
-Art_Car_Fire.ino:65:45: error: ‘determineSequence’ was not declared in this scope
-Art_Car_Fire.ino: At global scope:
-Art_Car_Fire.ino:116:1: error: expected unqualified-id before ‘{’ token
-*/
